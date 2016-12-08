@@ -107,6 +107,11 @@ string OnlineSuperMarket::get_name() {
 void OnlineSuperMarket::set_name(string name) {
     market_name_ = name;
 }
+//member functions
+void OnlineSuperMarket::Init() {
+    //for(int i = 0;i < 
+    
+}
 
 
 
