@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
@@ -180,8 +181,12 @@ void OnlineSuperMarket::ShowAll() {
 }
 
 int main() {
-    OnlineSuperMarket* super = NULL;
-    OnlineSuperMarket *market = new OnlineSuperMarket("Foothill Supermarket","www.supermarket.com");
-    super = market;
+    OnlineSuperMarket * p_market = NULL;
+    OnlineSuperMarket market("Foothill Supermarket","www.supermarket.com");
+    p_market = &market;
+    p_market->Init();
+    market.Sort();
+    p_market->ShowAll();
+    market.Run();
     return 0;
 }
