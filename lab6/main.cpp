@@ -1,3 +1,8 @@
+//==============================================================
+//File Name: main.cpp 
+//Author: McClane Howland
+//Description: Program that creates an array of 8 fruits with random prices and weights and allows the user to buy items
+//==============================================================
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -58,11 +63,8 @@ float Fruit::Order(float weight) {
     return price_*weight;
 }
 void Fruit::Display() {
-    cout<<fixed<<setw(10)<<name_<<setw(8)<<setprecision(2)<<price_<<setw(8)<<setprecision(2)<<weight_<<endl;
+    cout<<fixed<<left<<setw(10)<<name_<<right<<" $"<<left<<setw(3)<<setprecision(2)<<price_<<"/lb\t"<<setw(4)<<setprecision(2)<<weight_<<"lbs"<<endl;
 }
-
-
-
 
 class OnlineSuperMarket {
     private: 
@@ -116,12 +118,12 @@ void OnlineSuperMarket::Init() {
     float LO[8] = {0.5,2.1,3,2.15,0.2,1.5,3,0.75};
     float HI[8] = {0.85,3.5,3.5,4.5,0.45,3.2,4.5,1.25};
 
-    srand(static_cast<float>(time(0)));
+    srand(static_cast<unsigned>(time(0)));
 
     for(int i = 0;i < 8;i++) {
         fruits[i].set_name(names[i]);
-        fruits[i].set_price(LO[i]+rand()%(HI-LO));
-        fruits[i].set_weight(10+rand()%40);
+        fruits[i].set_price(LO[i]+(rand() / (float)RAND_MAX * (HI[i]-LO[i])));
+        fruits[i].set_weight(10+rand() / (float)RAND_MAX * 40);
     }
     
 }
@@ -159,7 +161,7 @@ void OnlineSuperMarket::Run() {
         }
         int index = Find(name);
         if(index == -1) {
-            cout<<"invalid fruit name";
+            cout<<"invalid fruit name\n";
             continue;
         }
         cout<<"\nEnter weight in lbs: ";
@@ -182,11 +184,11 @@ void OnlineSuperMarket::ShowAll() {
 
 int main() {
     OnlineSuperMarket * p_market = NULL;
-    OnlineSuperMarket market("Foothill Supermarket","www.supermarket.com");
-    p_market = &market;
+    p_market = new OnlineSuperMarket("Foothill Supermarket","www.supermarket.com");
     p_market->Init();
-    market.Sort();
+    p_market->Sort();
     p_market->ShowAll();
-    market.Run();
+    p_market->Run();
+    delete p_market;
     return 0;
 }
